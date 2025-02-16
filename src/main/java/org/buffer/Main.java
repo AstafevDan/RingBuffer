@@ -1,36 +1,29 @@
 package org.buffer;
 
 public class Main {
+    private static <T> void processRingBuffer(RingBuffer<T> ringBuffer, T value) {
+        ringBuffer.offer(value);
+        System.out.println(ringBuffer);
+        System.out.println("------------------");
+    }
+
     public static void main(String[] args) throws InterruptedException {
         //Первая часть демонстрирует работу основных методов RingBuffer
         RingBuffer<Integer> ringBuffer = new RingBuffer<>(5);
-        ringBuffer.offer(1);
-        System.out.println(ringBuffer);
-        System.out.println("------------------");
-        ringBuffer.offer(2);
-        System.out.println(ringBuffer);
-        System.out.println("------------------");
-        ringBuffer.offer(3);
-        System.out.println(ringBuffer);
-        System.out.println("------------------");
-        ringBuffer.offer(4);
-        System.out.println(ringBuffer);
-        System.out.println("------------------");
-        ringBuffer.offer(5);
-        System.out.println(ringBuffer);
-        System.out.println("------------------");
+        for (int i = 1; i < 6; i++) {
+            processRingBuffer(ringBuffer, i);
+        }
+
         System.out.println("First value: " + ringBuffer.peek());
-        ringBuffer.offer(6);
-        System.out.println(ringBuffer);
+        processRingBuffer(ringBuffer, 6);
         System.out.println("First value: " + ringBuffer.peek());
-        System.out.println("------------------");
+
         System.out.println("Removed value: " + ringBuffer.poll());
         System.out.println("First value: " + ringBuffer.peek());
-        ringBuffer.offer(7);
-        System.out.println(ringBuffer);
-        ringBuffer.offer(8);
-        System.out.println(ringBuffer);
-        System.out.println("------------------");
+
+        processRingBuffer(ringBuffer, 7);
+        processRingBuffer(ringBuffer, 8);
+
         System.out.println("Size: " + ringBuffer.size());
 
         //Во второй части демонстрируется многопоточность RingBuffer
